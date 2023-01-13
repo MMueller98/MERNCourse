@@ -17,7 +17,13 @@ router.get("/", NotesController.getNotes);
 // GET-Operation: return Note with ID given in url path-parameter
 router.get("/:noteId", NotesController.getNote);
 
-// GET-Operation: create new Note with request-parameters and return it
+// POST-Operation: create new Note with request-parameters and return it
 router.post("/", NotesController.createNotes);
+
+// PATCH-Operation: update note with given noteId with request-parameters
+router.patch("/:noteId", NotesController.updateNote);
+
+// DELETE-Operation: delete note with given noteId
+router.delete("/:noteId", NotesController.deleteNote);
 
 export default router;

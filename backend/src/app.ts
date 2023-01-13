@@ -5,6 +5,7 @@ import notesRoutes from "./routes/notes";
 //  -> hover over error and it will show "try 'npm i --save-dev @types/morgan'"
 //  -> this is the language support package you have to install 
 import morgan from "morgan";
+import createHttpError, {isHttpError} from "http-errors";
 
 // creates express application
 const app = express();
@@ -27,18 +28,24 @@ app.use("/api/notes", notesRoutes);
 
 // middleware for when no route (endpoint) is defined for request 
 app.use((req, res, next) => {
-    next(Error("Endpoint not found!"));
+    next(createHttpError(404, "Endpoint not found"));
 });
 
 // middleware for error handling
+//  -> error-handling middleware always takes four arguments
+//  -> you must provide four arguments to identify it as an error-handling middleware function.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     console.error(error);
     // show generic error message
     let errorMessage = "An unknown error occured";
-    if(error instanceof Error) errorMessage = error.message;
+    let statusCode = 500;
+    if(isHttpError(error)){
+        statusCode = error.status;
+        errorMessage = error.message;
+    }
     // 500 -> internal server error
-    res.status(500).json({error: errorMessage});
+    res.status(statusCode).json({error: errorMessage});
 })
 
 export default app;
