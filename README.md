@@ -45,3 +45,8 @@ Used Packages
 * **morgan:**
     &rarr; HTTP request logger middleware for node.js
     &rarr; install @types/morgan to make it work with TypeScript
+
+
+* **react-hook-form**
+    &rarr; library that helps you validate forms in React
+    &rarr; reduces the amount of code you need to write while removing unnecessary re-renders.
