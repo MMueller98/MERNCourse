@@ -19,12 +19,12 @@ export async function fetchNotes(): Promise<Note[]> {
     return response.json();
 }
 
-// create notes in frontend
 export interface NoteInput{
     title: string,
     text?: string
 }
 
+// create notes in frontend
 export async function createNote(note:NoteInput): Promise<Note> {
     const response = await fetchData("/api/notes", {
         method: "POST",
@@ -35,4 +35,23 @@ export async function createNote(note:NoteInput): Promise<Note> {
     });
 
     return response.json();
+}
+
+// update notes in frontend
+export async function updateNote(noteId:string, note: NoteInput): Promise<Note> {
+    const response = await fetchData("/api/notes/" + noteId, 
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(note)
+        }
+    );
+    return response.json();
+}
+
+// delete notes in frontend
+export async function deleteNote(noteId: string){
+    await fetchData("/api/notes/" + noteId, { method: "DELETE"});
 }

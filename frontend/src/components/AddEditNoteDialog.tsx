@@ -4,7 +4,8 @@ import { NoteInput } from "../network/notes_api";
 import { useForm } from "react-hook-form";
 import * as NotesApi from "../network/notes_api";
 
-interface AddNoteDialogProps {
+interface AddEditNoteDialogProps {
+    noteToEdit?: Note,
     onDismiss: () => void,
     onNoteSaved: (note: Note) => void,
 }
@@ -12,16 +13,29 @@ interface AddNoteDialogProps {
 // Modal to insert new Notes
 //  -> component accepts callback functions that are called on specific event 
 //  -> e.g. showDialoag-state update on dismiss of the form
-const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
+const AddEditNoteDialog = ({noteToEdit, onDismiss, onNoteSaved}: AddEditNoteDialogProps) => {
 
     // components from react-hook-form
-    const { register, handleSubmit, formState : {errors, isSubmitting}} = useForm<NoteInput>();
+    const { register, handleSubmit, formState : {errors, isSubmitting}} = useForm<NoteInput>({
+        // set default values -> "old content" from note to edit or empty if you want to add a note
+        defaultValues: {
+            title: noteToEdit?.title || "",
+            text: noteToEdit?.text || ""
+        }
+    });
 
     // function thats called onSubmit on AddNote-Form
     async function onSubmit(input:NoteInput) {
         try {
-            const noteResponse = await NotesApi.createNote(input);
+            let noteResponse: Note;
+            // distinguish between update and create operation
+            if(noteToEdit){
+                noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
+            }else{
+                noteResponse = await NotesApi.createNote(input);
+            }
             onNoteSaved(noteResponse)
+            
         } catch (error) {
             console.error(error);
             alert(error);
@@ -33,7 +47,7 @@ const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
         <Modal show onHide={onDismiss}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    Add Note
+                    {noteToEdit ? "Edit Note" : "Add Note"}
                 </Modal.Title>
             </Modal.Header>
 
@@ -79,4 +93,4 @@ const AddNoteDialog = ({onDismiss, onNoteSaved}: AddNoteDialogProps) => {
      );
 }
  
-export default AddNoteDialog;
+export default AddEditNoteDialog;

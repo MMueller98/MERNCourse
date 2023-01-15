@@ -21,7 +21,7 @@ Used Packages
     &rarr; TypeScript execution environment and REPL for node.js
 
 
-### Production:
+### Production Backend:
 * **dotenv:** 
 	&rarr; zero-dependency module that loads environment variables from a .env file into 	process.env
 
@@ -47,6 +47,10 @@ Used Packages
     &rarr; install @types/morgan to make it work with TypeScript
 
 
+### Production Frontend:
 * **react-hook-form**
     &rarr; library that helps you validate forms in React
     &rarr; reduces the amount of code you need to write while removing unnecessary re-renders.
+
+* **react-icons**
+    &rarr; Include popular icons in your React projects easily with react-icons, which utilizes ES6 imports that allows you to include only the icons that your project is using
