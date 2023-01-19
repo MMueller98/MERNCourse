@@ -1,11 +1,15 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import notesRoutes from "./routes/notes";
+import userRoutes from "./routes/users";
 // without further specification, morgan shows an error here, because it can't find a proper declaration file
 //  -> hover over error and it will show "try 'npm i --save-dev @types/morgan'"
 //  -> this is the language support package you have to install 
 import morgan from "morgan";
 import createHttpError, {isHttpError} from "http-errors";
+import session from "express-session";
+import env from "./util/validateEnv";
+import MongoStore from "connect-mongo";
 
 // creates express application
 const app = express();
@@ -21,9 +25,30 @@ const app = express();
 app.use(morgan("dev"));
 
 // middleware, so app can recieve JSON-data (e.g. to insert new Notes)
-app.use(express.json())
+app.use(express.json());
 
-// catches any request that goes to endpoint "/api/notes" and pass it to given router
+// middleware for session management 
+//  -> its important to insert use-statement before routes
+app.use(session({
+    // secret to sign the session cookie
+    //  -> don't hardcode here 
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        // how long should cookie live
+        maxAge: 60 * 60 * 1000,
+    },
+    // cookies will refresh automatically if user is signed in
+    rolling: true,
+    // where to store session data
+    store: MongoStore.create({
+        mongoUrl: env.MONGO_CONNECTION_STRING
+    }),
+}));
+
+// catches any request that goes to endpoints and pass it to given router
+app.use("/api/users", userRoutes);
 app.use("/api/notes", notesRoutes);
 
 // middleware for when no route (endpoint) is defined for request 

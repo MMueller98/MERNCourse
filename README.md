@@ -22,6 +22,14 @@ Used Packages
 
 
 ### Production Backend:
+* **bcrypt**
+    &rarr; A library to help you hash passwords
+    &rarr; install @types/bcrypt to make it work with TypeScript
+
+* **connect-mongo**
+    &rarr; MongoDB session store for Connect and Express written in Typescript
+    &rarr; used to save express-session in MongoDB
+
 * **dotenv:** 
 	&rarr; zero-dependency module that loads environment variables from a .env file into 	process.env
 
@@ -32,6 +40,10 @@ Used Packages
 * **express:**
     &rarr; Fast, unopinionated, minimalist web framework for Node.js
     &rarr; install @types/express to make it work with TypeScript
+
+* **express-session**
+    &rarr; an HTTP server-side framework used to create and manage a session middleware
+    &rarr; install @types/express-session to make it work with TypeScript
 
 * **http-erros**
     &rarr; create HTTP errors for Express, Koa, Connect, etc. with ease
