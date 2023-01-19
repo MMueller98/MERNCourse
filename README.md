@@ -1,4 +1,5 @@
-# MMWebServer
+# MERN Course by @Coding in Flow
+This is a full-stack MERN app with React, Node, Express, MongoDB Atlas, and TypeScript.
 
 Used Packages
 ==
