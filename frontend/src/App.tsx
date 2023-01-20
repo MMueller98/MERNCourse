@@ -22,7 +22,6 @@ function App() {
       try {
         const user = await UsersApi.getLoggedInUser();
         // if getLoggedInUser runs without error (user is login) we can set loggedin user
-        console.log(user);
         setLoggedInUser(user);
       } catch (error) {
         console.error(error);

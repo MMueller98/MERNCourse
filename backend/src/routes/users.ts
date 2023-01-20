@@ -1,10 +1,12 @@
 import express from "express";
 import * as UserController from "../controllers/users";
+import { requiresAuth } from "../middleware/auth";
 
 const router = express.Router();
 
 // GET routes for authenticated user
-router.get("/", UserController.getAuthenticatedUser);
+//  -> order matters (check for authentication first)
+router.get("/", requiresAuth,  UserController.getAuthenticatedUser);
 
 // POST routes for user signup and login
 router.post("/signup", UserController.signUp);

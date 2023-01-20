@@ -11,8 +11,6 @@ interface NavBarProps {
 }
 
 const NavBar = ({loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccessful}: NavBarProps) => {
-    console.log(loggedInUser)
-    
     return (
         <Navbar bg="primary" variant="dark" expand="sm" sticky="top">
             <Container>
