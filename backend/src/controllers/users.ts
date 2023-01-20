@@ -12,8 +12,6 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
     //  -> this way, the user doesn't have to login again
     //  -> if we delete session from database, user is forced to logout
     const authenticatedUserID = req.session.userId;
-    console.log("getAuthenticatedUser called");
-    console.log("id: " + req.session.id)
 
     try {
         // get user by ID in session cookie

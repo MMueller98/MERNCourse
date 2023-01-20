@@ -10,6 +10,7 @@ import createHttpError, {isHttpError} from "http-errors";
 import session from "express-session";
 import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
+import { requiresAuth } from "./middleware/auth";
 
 // creates express application
 const app = express();
@@ -49,7 +50,7 @@ app.use(session({
 
 // catches any request that goes to endpoints and pass it to given router
 app.use("/api/users", userRoutes);
-app.use("/api/notes", notesRoutes);
+app.use("/api/notes", requiresAuth ,notesRoutes);
 
 // middleware for when no route (endpoint) is defined for request 
 app.use((req, res, next) => {
