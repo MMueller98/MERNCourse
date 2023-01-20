@@ -1,4 +1,7 @@
-# MMWebServer
+# MERN Course by @Coding in Flow
+This is a full-stack MERN app with React, Node, Express, MongoDB Atlas, and TypeScript created by @CodingInFlow.
+The full course can be found on https://www.youtube.com/watch?v=FcxjCPeicvU&t=18646s. Please support him on YouTube - he's doing fantastic work!
+
 
 Used Packages
 ==
